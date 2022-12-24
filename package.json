@@ -1,6 +1,16 @@
 {
     "name": "create-blech-app",
     "version": "1.0.0",
-    "main": "index.js",
-    "license": "MIT"
+    "main": "lib/index.mjs",
+    "license": "MIT",
+    "scripts": {
+        "start": "node ./lib/index.mjs"
+    },
+    "dependencies": {
+        "chalk": "^5.2.0",
+        "clui": "^0.3.6",
+        "figlet": "^1.5.2",
+        "inquirer": "^9.1.4",
+        "yaml": "^2.2.0"
+    }
 }
