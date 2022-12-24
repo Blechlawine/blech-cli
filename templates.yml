@@ -1,0 +1,9 @@
+templates:
+  # - name: the id/name of the template, if bundled, this is the name of the folder in the template directory
+  #   display: the display name
+  #   type: git | bundled
+  #   # if type is git, specify a git repository url
+  #   url: url
+  - name: turbo
+    display: Turborepo
+    type: bundled

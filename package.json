@@ -1,7 +1,16 @@
 {
-    "name": "create-blech-app",
+    "name": "create-blech",
     "version": "1.0.0",
     "main": "lib/index.mjs",
+    "type": "module",
+    "bin": {
+        "create-blech": "lib/index.mjs"
+    },
+    "files": [
+        "lib",
+        "templates",
+        "templates.yml"
+    ],
     "license": "MIT",
     "scripts": {
         "start": "node ./lib/index.mjs"
@@ -10,6 +19,7 @@
         "chalk": "^5.2.0",
         "clui": "^0.3.6",
         "figlet": "^1.5.2",
+        "fs-extra": "^11.1.0",
         "inquirer": "^9.1.4",
         "yaml": "^2.2.0"
     }
