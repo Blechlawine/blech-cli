@@ -1,10 +1,10 @@
 {
     "name": "create-blech",
     "version": "0.1.0",
-    "main": "lib/index.mjs",
+    "main": "index.js",
     "type": "module",
     "bin": {
-        "create-blech": "lib/index.mjs"
+        "create-blech": "index.js"
     },
     "files": [
         "lib",
@@ -13,7 +13,7 @@
     ],
     "license": "MIT",
     "scripts": {
-        "start": "node ./lib/index.mjs"
+        "start": "node ./index.js"
     },
     "dependencies": {
         "chalk": "^5.2.0",
