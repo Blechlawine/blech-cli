@@ -7,3 +7,8 @@ templates:
   - name: turbo
     display: Turborepo
     type: bundled
+
+  # TODO: add templates for:
+  # - nitro, trpc, prisma with trpc and prisma being optional options
+  # - vue, trpc, pinia, typescript, tailwind, daisyui with all those as options
+  # - astro, solid or svelte, trpc, tailwind, daisyui with all those as options
