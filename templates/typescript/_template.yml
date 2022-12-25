@@ -1,0 +1,6 @@
+commands:
+  - yarn set version stable
+
+ignore:
+  - node_modules
+  - "*.lock"

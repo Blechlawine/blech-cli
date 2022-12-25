@@ -7,7 +7,9 @@ templates:
   - name: turbo
     display: Turborepo
     type: bundled
-    # TODO: add options for commands to run in project directory once the template was copied (for example: `yarn set version stable`)
+  - name: typescript
+    display: Typescript
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
