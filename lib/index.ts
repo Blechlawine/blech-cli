@@ -35,7 +35,13 @@ inquirer
                 fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "templates.yml"), {
                     encoding: "utf8",
                 })
-            );
+            ) as {
+                templates: {
+                    name: string;
+                    display: string;
+                    type: "bundled" | "git";
+                }[];
+            };
             const answers = Object.assign(
                 _answers,
                 await inquirer.prompt<{
