@@ -11,7 +11,10 @@ import minimatch from "minimatch";
 
 console.log(chalk.green(figlet.textSync("Blech-cli")));
 inquirer
-    .prompt([
+    .prompt<{
+        name: string;
+        type: "CLI" | "Template";
+    }>([
         {
             type: "input",
             name: "name",
@@ -25,25 +28,27 @@ inquirer
             choices: ["CLI", "Template"],
         },
     ])
-    .then(async (answers) => {
-        if (answers.type === "Template") {
+    .then(async (_answers) => {
+        if (_answers.type === "Template") {
             // fileUrlToPath(import.meta.url) is the module equivalent of __dirname
             const { templates } = yml.parse(
                 fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "templates.yml"), {
                     encoding: "utf8",
                 })
             );
-            answers = {
-                ...answers,
-                ...(await inquirer.prompt([
+            const answers = Object.assign(
+                _answers,
+                await inquirer.prompt<{
+                    template: string;
+                }>([
                     {
                         type: "list",
                         name: "template",
                         message: "Which template do you want?",
                         choices: templates,
                     },
-                ])),
-            };
+                ])
+            );
             const projectDir = path.join(cwd(), answers.name);
             const templateDir = path.join(fileURLToPath(import.meta.url), "../..", "templates", answers.template);
             if (!fs.existsSync(projectDir)) fs.mkdirSync(projectDir, { recursive: true });
@@ -64,47 +69,51 @@ inquirer
             // TODO: add progress bar when copying
             console.log(chalk.yellow("Copying template..."));
             const templateConfigPath = path.join(templateDir, "_template.yml");
-            const templateConfig = yml.parse(fs.readFileSync(templateConfigPath, "utf-8"));
+            const templateConfig: TTemplateConfig = yml.parse(fs.readFileSync(templateConfigPath, "utf-8"));
             fs.copySync(templateDir, projectDir, {
                 overwrite: true,
                 filter: (src, dest) => {
-                    return !templateConfig.ignore.concat(["_template.yml"]).some((glob) => {
+                    return !["_template.yml"].concat(templateConfig.ignore ?? []).some((glob) => {
                         return minimatch(src, glob, { matchBase: true });
                     });
                 },
             });
             console.log(chalk.greenBright("Template copied successfully"));
-            console.log("Running template setup...");
-            console.log(chalk.redBright("Going to run these commands in your project directory:"));
-            for (const command of templateConfig.commands) {
-                console.log(` | ${command}`);
-            }
-            const { confirmed } = await inquirer.prompt([
-                {
-                    type: "confirm",
-                    name: "confirmed",
-                    default: true,
-                    message: "Do you want to continue?",
-                },
-            ]);
-            if (confirmed) {
+            if (templateConfig.commands) {
+                console.log("Running template setup...");
+                console.log(chalk.redBright("Going to run these commands in your project directory:"));
                 for (const command of templateConfig.commands) {
-                    console.log(chalk.greenBright(`Running command: ${command}`));
-                    execSync(command, { cwd: projectDir });
+                    console.log(` | ${command}`);
+                }
+                const { confirmed } = await inquirer.prompt([
+                    {
+                        type: "confirm",
+                        name: "confirmed",
+                        default: true,
+                        message: "Do you want to continue?",
+                    },
+                ]);
+                if (confirmed) {
+                    for (const command of templateConfig.commands) {
+                        console.log(chalk.greenBright(`Running command: ${command}`));
+                        execSync(command, { cwd: projectDir });
+                    }
                 }
             }
         } else {
-            answers = {
-                ...answers,
-                ...(await inquirer.prompt([
+            const answers = Object.assign(
+                _answers,
+                await inquirer.prompt<{
+                    cli: "Vite" | "Next.js" | "T3" | "Solid-start";
+                }>([
                     {
                         type: "list",
                         name: "cli",
                         message: "Which cli do you want to run?",
                         choices: ["Vite", "Next.js", "T3", "Solid-start"],
                     },
-                ])),
-            };
+                ])
+            );
             let subProc;
             const yarnCommand = process.platform == "win32" ? "yarn.cmd" : "yarn";
             switch (answers.cli) {
@@ -126,7 +135,8 @@ inquirer
                     subProc = spawn(yarnCommand, ["create", "t3-app", answers.name], { stdio: "inherit" });
                     break;
                 default:
-                    break;
+                    console.log(chalk.red("Unknown CLI"));
+                    process.exit(1);
             }
             subProc.on("error", (err) => console.error(err));
             subProc.on("close", (code) => {
