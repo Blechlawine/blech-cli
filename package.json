@@ -26,14 +26,7 @@
         "unbuild": "^1.0.2"
     },
     "type": "module",
-    "exports": {
-        ".": {
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs"
-        }
-    },
-    "main": "./dist/index.cjs",
-    "module": "./dist/index.mjs",
+    "main": "index.js",
     "files": [
         "dist",
         "templates",

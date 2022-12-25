@@ -6,7 +6,4 @@ export default defineBuildConfig({
         // inputs to build
         "lib/index",
     ],
-    rollup: {
-        emitCJS: true, // generates common js module
-    },
 });
