@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schema/_template.json
 commands:
   - yarn set version stable
 

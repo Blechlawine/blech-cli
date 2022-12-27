@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Templates for Blech-cli (create-blech)",
+    "type": "object",
+    "properties": {
+        "templates": {
+            "type": "array",
+            "description": "A list of the available templates",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the template, if it is a bundled template, then this is the name of the directory containing the bundled template, in the directory 'templates'"
+                    },
+                    "display": {
+                        "type": "string",
+                        "description": "The display name of the template, displayed in the cli"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["git", "bundled"],
+                        "description": "the type of the template, valid: 'git', 'bundled'"
+                    }
+                }
+            }
+        }
+    }
+}

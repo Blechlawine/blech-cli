@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema/templates.json
 templates:
   # - name: the id/name of the template, if bundled, this is the name of the folder in the template directory
   #   display: the display name
