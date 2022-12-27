@@ -1,13 +1,13 @@
 import chalk from "chalk";
 import figlet from "figlet";
 import inquirer from "inquirer";
-import { execSync, spawn } from "child_process";
 import { cwd } from "process";
 import * as yml from "yaml";
 import { fileURLToPath } from "url";
 import fs from "fs-extra";
 import path from "path";
-import minimatch from "minimatch";
+import { handleCLI } from "./cli";
+import { copyTemplateFiles, runTemplateSetup } from "./template";
 
 console.log(chalk.green(figlet.textSync("Blech-cli")));
 inquirer
@@ -72,81 +72,11 @@ inquirer
                     process.exit(1);
                 }
             }
-            // TODO: add progress bar when copying
-            console.log(chalk.yellow("Copying template..."));
             const templateConfigPath = path.join(templateDir, "_template.yml");
             const templateConfig: TTemplateConfig = yml.parse(fs.readFileSync(templateConfigPath, "utf-8"));
-            fs.copySync(templateDir, projectDir, {
-                overwrite: true,
-                filter: (src, dest) => {
-                    return !["_template.yml"].concat(templateConfig.ignore ?? []).some((glob) => {
-                        return minimatch(src, glob, { matchBase: true });
-                    });
-                },
-            });
-            console.log(chalk.greenBright("Template copied successfully"));
-            if (templateConfig.commands) {
-                console.log("Running template setup...");
-                console.log(chalk.redBright("Going to run these commands in your project directory:"));
-                for (const command of templateConfig.commands) {
-                    console.log(` | ${command}`);
-                }
-                const { confirmed } = await inquirer.prompt([
-                    {
-                        type: "confirm",
-                        name: "confirmed",
-                        default: true,
-                        message: "Do you want to continue?",
-                    },
-                ]);
-                if (confirmed) {
-                    for (const command of templateConfig.commands) {
-                        console.log(chalk.greenBright(`Running command: ${command}`));
-                        execSync(command, { cwd: projectDir });
-                    }
-                }
-            }
+            copyTemplateFiles(templateDir, projectDir, templateConfig);
+            await runTemplateSetup(projectDir, templateConfig);
         } else {
-            const answers = Object.assign(
-                _answers,
-                await inquirer.prompt<{
-                    cli: "Vite" | "Next.js" | "T3" | "Solid-start";
-                }>([
-                    {
-                        type: "list",
-                        name: "cli",
-                        message: "Which cli do you want to run?",
-                        choices: ["Vite", "Next.js", "T3", "Solid-start"],
-                    },
-                ])
-            );
-            let subProc;
-            const yarnCommand = process.platform == "win32" ? "yarn.cmd" : "yarn";
-            switch (answers.cli) {
-                case "Vite":
-                    subProc = spawn(yarnCommand, ["create", "vite", answers.name], { stdio: "inherit" });
-                    break;
-                case "Next.js":
-                    subProc = spawn(yarnCommand, ["create", "next-app", answers.name], { stdio: "inherit" });
-                    break;
-                case "Solid-start":
-                    if (!fs.existsSync(path.join(cwd(), answers.name)))
-                        fs.mkdirSync(path.join(cwd(), answers.name), { recursive: true });
-                    subProc = spawn(yarnCommand, ["create", "solid"], {
-                        stdio: "inherit",
-                        cwd: path.join(cwd(), answers.name),
-                    });
-                    break;
-                case "T3":
-                    subProc = spawn(yarnCommand, ["create", "t3-app", answers.name], { stdio: "inherit" });
-                    break;
-                default:
-                    console.log(chalk.red("Unknown CLI"));
-                    process.exit(1);
-            }
-            subProc.on("error", (err) => console.error(err));
-            subProc.on("close", (code) => {
-                console.log(`${answers.cli} CLI terminated:`, code);
-            });
+            handleCLI(_answers);
         }
     });
