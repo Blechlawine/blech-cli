@@ -2,7 +2,3 @@
 commands:
   - yarn set version stable
   - yarn config set nodeLinker node-modules
-
-ignore:
-  - node_modules
-  - "*.lock"
