@@ -30,6 +30,10 @@
     "repository": {
         "url": "https://github.com/Blechlawine/blech-cli"
     },
+    "author": {
+        "name": "Blechlawine",
+        "url": "https://github.com/Blechlawine"
+    },
     "files": [
         "dist",
         "templates",
