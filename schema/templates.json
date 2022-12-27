@@ -21,6 +21,10 @@
                         "type": "string",
                         "enum": ["git", "bundled"],
                         "description": "the type of the template, valid: 'git', 'bundled'"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "In case of type: 'git': the url of the template repository"
                     }
                 }
             }

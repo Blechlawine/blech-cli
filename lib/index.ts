@@ -7,7 +7,9 @@ import { fileURLToPath } from "url";
 import fs from "fs-extra";
 import path from "path";
 import { handleCLI } from "./cli";
-import { copyTemplateFiles, runTemplateSetup } from "./template";
+import { copyTemplateFiles, readTemplateConfig, runTemplateSetup } from "./template";
+import { execSync } from "child_process";
+import minimatch from "minimatch";
 
 console.log(chalk.green(figlet.textSync("Blech-cli")));
 inquirer
@@ -36,11 +38,10 @@ inquirer
                     encoding: "utf8",
                 })
             ) as {
-                templates: {
+                templates: ({
                     name: string;
                     display: string;
-                    type: "bundled" | "git";
-                }[];
+                } & ({ type: "bundled" } | { type: "git"; url: string }))[];
             };
             const answers = Object.assign(
                 _answers,
@@ -51,12 +52,17 @@ inquirer
                         type: "list",
                         name: "template",
                         message: "Which template do you want?",
-                        choices: templates,
+                        choices: templates.map((t) => t.display),
                     },
                 ])
             );
+            const selectedTemplate = templates.find((t) => t.display === answers.template);
+            if (!selectedTemplate) {
+                console.log(chalk.redBright("Error selecting template"));
+                process.exit(1);
+            }
             const projectDir = path.join(cwd(), answers.name);
-            const templateDir = path.join(fileURLToPath(import.meta.url), "../..", "templates", answers.template);
+            const templateDir = path.join(fileURLToPath(import.meta.url), "../..", "templates", selectedTemplate.name);
             if (!fs.existsSync(projectDir)) fs.mkdirSync(projectDir, { recursive: true });
             const filesInProjectDir = fs.readdirSync(projectDir);
             if (filesInProjectDir.length > 0) {
@@ -72,9 +78,24 @@ inquirer
                     process.exit(1);
                 }
             }
-            const templateConfigPath = path.join(templateDir, "_template.yml");
-            const templateConfig: TTemplateConfig = yml.parse(fs.readFileSync(templateConfigPath, "utf-8"));
-            copyTemplateFiles(templateDir, projectDir, templateConfig);
+            let templateConfig: TTemplateConfig = {};
+            if (selectedTemplate.type === "bundled") {
+                templateConfig = readTemplateConfig(path.join(templateDir, "_template.yml"));
+                copyTemplateFiles(templateDir, projectDir, templateConfig);
+            } else if (selectedTemplate.type === "git") {
+                execSync(`npx degit ${selectedTemplate.url} ${projectDir}`);
+                templateConfig = readTemplateConfig(path.join(projectDir, "_template.yml"));
+                for (const file of fs.readdirSync(projectDir)) {
+                    if (
+                        ["_template.yml"].concat(templateConfig.ignore ?? []).some((glob) => {
+                            return minimatch(file, glob, { matchBase: true });
+                        })
+                    ) {
+                        // Remove every file that matches a glob pattern in ignore
+                        fs.removeSync(file);
+                    }
+                }
+            }
             await runTemplateSetup(projectDir, templateConfig);
         } else {
             handleCLI(_answers);

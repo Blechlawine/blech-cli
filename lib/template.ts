@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import minimatch from "minimatch";
-import path from "path";
 import fs from "fs-extra";
 import { execSync } from "child_process";
 import inquirer from "inquirer";
+import * as yml from "yaml";
 
 export function copyTemplateFiles(templateDir: string, projectDir: string, templateConfig: TTemplateConfig) {
     // TODO: add progress bar when copying
@@ -41,4 +41,12 @@ export async function runTemplateSetup(projectDir: string, templateConfig: TTemp
             }
         }
     }
+}
+
+export function readTemplateConfig(configPath: string) {
+    let templateConfig: TTemplateConfig = {};
+    if (fs.existsSync(configPath)) {
+        templateConfig = yml.parse(fs.readFileSync(configPath, "utf8"));
+    }
+    return templateConfig;
 }
