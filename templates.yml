@@ -11,6 +11,9 @@ templates:
   - name: typescript
     display: Typescript
     type: bundled
+  - name: vue
+    display: Vue
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
