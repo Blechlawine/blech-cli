@@ -14,6 +14,9 @@ templates:
   - name: vue
     display: Vue
     type: bundled
+  - name: astro
+    display: Astro
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
