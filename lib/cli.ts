@@ -9,25 +9,27 @@ export async function handleCLI(_answers: { name: string }) {
     const answers = Object.assign(
         _answers,
         await inquirer.prompt<{
-            cli: "Vite" | "Next.js" | "T3" | "Solid-start" | "Astro";
+            cli: "Vite" | "Next.js" | "T3" | "Solid-start" | "Astro" | "Tauri";
         }>([
             {
                 type: "list",
                 name: "cli",
                 message: "Which cli do you want to run?",
-                choices: ["Vite", "Next.js", "T3", "Solid-start", "Astro"],
+                choices: ["Vite", "Next.js", "T3", "Solid-start", "Astro", "Tauri"],
             },
         ])
     );
     let subProc: ChildProcess;
-    const yarnCommand = process.platform == "win32" ? "yarn.cmd" : "yarn";
+    const yarnCommand = process.platform === "win32" ? "yarn.cmd" : "yarn";
     let askForInstall = true;
     switch (answers.cli) {
         case "Vite":
             subProc = spawn(yarnCommand, ["create", "vite", answers.name], { stdio: "inherit" });
             break;
         case "Next.js":
-            subProc = spawn(yarnCommand, ["create", "next-app", answers.name], { stdio: "inherit" });
+            subProc = spawn(yarnCommand, ["create", "next-app", answers.name], {
+                stdio: "inherit",
+            });
             askForInstall = false; // Next.js already asks about installing dependencies
             break;
         case "Solid-start":
@@ -45,6 +47,11 @@ export async function handleCLI(_answers: { name: string }) {
         case "Astro":
             subProc = spawn(yarnCommand, ["create", "astro", answers.name], { stdio: "inherit" });
             askForInstall = false; // astro cli already asks about installing dependencies
+            break;
+        case "Tauri":
+            subProc = spawn(yarnCommand, ["create", "tauri-app", answers.name], {
+                stdio: "inherit",
+            });
             break;
         default:
             console.log(chalk.red("Unknown CLI"));
@@ -68,7 +75,10 @@ export async function handleCLI(_answers: { name: string }) {
         ]);
         if (shouldInstall) {
             console.log(chalk.greenBright("Installing dependencies"));
-            execSync(`${yarnCommand} install`, { cwd: path.join(cwd(), answers.name), stdio: "inherit" });
+            execSync(`${yarnCommand} install`, {
+                cwd: path.join(cwd(), answers.name),
+                stdio: "inherit",
+            });
         }
     }
 }
