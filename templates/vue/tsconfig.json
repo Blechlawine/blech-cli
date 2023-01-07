@@ -12,7 +12,12 @@
         "lib": ["ESNext", "DOM"],
         "skipLibCheck": true,
         "noEmit": true,
-        "types": ["vite/client", "vite-plugin-pages/client", "vite-plugin-pwa/client"]
+        "types": [
+            "vue/ref-macros", // for reactivity transform to work
+            "vite/client",
+            "vite-plugin-pages/client",
+            "vite-plugin-pwa/client"
+        ]
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
     "references": [{ "path": "./tsconfig.node.json" }]
