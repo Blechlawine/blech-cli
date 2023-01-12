@@ -6,6 +6,7 @@ import Inspect from "vite-plugin-inspect";
 import Inspector from "vite-plugin-vue-inspector";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import Unocss from "unocss/vite";
 
 export default defineConfig({
     resolve: {
@@ -28,8 +29,9 @@ export default defineConfig({
         // Auto import for components
         Components({
             include: [/\.vue$/, /\.vue\?vue/],
-            dts: "src/generated/components.d.ts"
+            dts: "src/generated/components.d.ts",
         }),
+        Unocss(),
         VitePWA({
             registerType: "autoUpdate",
             includeAssets: ["favicon.svg"],
