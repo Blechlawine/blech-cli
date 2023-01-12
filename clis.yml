@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=schema/clis.json
+clis:
+  - display: Vite
+    command: vite
+    askForInstall: true
+  - display: Next.js
+    command: next-app
+    askForInstall: false # Next.js already asks about installing dependencies
+  - display: Solid-start
+    command: solid
+    askForInstall: true
+    createProjectFolder: true
+  - display: T3
+    command: t3-app
+    askForInstall: false # create-T3-app already asks about installing dependencies
+  - display: Astro
+    command: astro
+    askForInstall: false # Astro-cli already asks about installing dependencies
+  - display: Tauri
+    command: tauri-app
+    askForInstall: true

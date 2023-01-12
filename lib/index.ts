@@ -34,15 +34,13 @@ inquirer
         if (_answers.type === "Template") {
             // fileUrlToPath(import.meta.url) is the module equivalent of __dirname
             const { templates } = yml.parse(
-                fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "templates.yml"), {
-                    encoding: "utf8",
-                })
-            ) as {
-                templates: ({
-                    name: string;
-                    display: string;
-                } & ({ type: "bundled" } | { type: "git"; url: string }))[];
-            };
+                fs.readFileSync(
+                    path.join(fileURLToPath(import.meta.url), "../..", "templates.yml"),
+                    {
+                        encoding: "utf8",
+                    }
+                )
+            ) as TTemplates;
             const answers = Object.assign(
                 _answers,
                 await inquirer.prompt<{
@@ -62,7 +60,12 @@ inquirer
                 process.exit(1);
             }
             const projectDir = path.join(cwd(), answers.name);
-            const templateDir = path.join(fileURLToPath(import.meta.url), "../..", "templates", selectedTemplate.name);
+            const templateDir = path.join(
+                fileURLToPath(import.meta.url),
+                "../..",
+                "templates",
+                selectedTemplate.name
+            );
             if (!fs.existsSync(projectDir)) fs.mkdirSync(projectDir, { recursive: true });
             const filesInProjectDir = fs.readdirSync(projectDir);
             if (filesInProjectDir.length > 0) {

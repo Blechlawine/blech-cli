@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Clis for Blech-cli (create-blech)",
+    "type": "object",
+    "properties": {
+        "clis": {
+            "type": "array",
+            "description": "A list of available clis",
+            "items": {
+                "type": "object",
+                "required": ["command", "display"],
+                "properties": {
+                    "command": {
+                        "type": "string",
+                        "description": "The command to run with `yarn create ...`"
+                    },
+                    "display": {
+                        "type": "string",
+                        "description": "The display name of the cli, displayed in the cli"
+                    },
+                    "askForInstall": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "After executing this command, the cli will ask if the user wants to install dependencies in the generated project"
+                    },
+                    "createProjectFolder": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "creates a project folder and runs this command in said folder"
+                    }
+                }
+            }
+        }
+    }
+}

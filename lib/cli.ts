@@ -4,58 +4,47 @@ import inquirer from "inquirer";
 import path from "path";
 import fs from "fs-extra";
 import { cwd } from "process";
+import * as yml from "yaml";
+import { fileURLToPath } from "url";
 
 export async function handleCLI(_answers: { name: string }) {
+    const { clis } = yml.parse(
+        fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "clis.yml"), {
+            encoding: "utf8",
+        })
+    ) as TClis;
     const answers = Object.assign(
         _answers,
         await inquirer.prompt<{
-            cli: "Vite" | "Next.js" | "T3" | "Solid-start" | "Astro" | "Tauri";
+            cli: TValidClis;
         }>([
             {
                 type: "list",
                 name: "cli",
                 message: "Which cli do you want to run?",
-                choices: ["Vite", "Next.js", "T3", "Solid-start", "Astro", "Tauri"],
+                choices: clis.map((cli) => cli.display),
             },
         ])
     );
-    let subProc: ChildProcess;
+    const selectedCli = clis.find((cli) => cli.display === answers.cli);
+    if (!selectedCli) {
+        console.log(chalk.redBright("Error selecting Cli"));
+        process.exit(1);
+    }
+
     const yarnCommand = process.platform === "win32" ? "yarn.cmd" : "yarn";
-    let askForInstall = true;
-    switch (answers.cli) {
-        case "Vite":
-            subProc = spawn(yarnCommand, ["create", "vite", answers.name], { stdio: "inherit" });
-            break;
-        case "Next.js":
-            subProc = spawn(yarnCommand, ["create", "next-app", answers.name], {
-                stdio: "inherit",
-            });
-            askForInstall = false; // Next.js already asks about installing dependencies
-            break;
-        case "Solid-start":
-            if (!fs.existsSync(path.join(cwd(), answers.name)))
-                fs.mkdirSync(path.join(cwd(), answers.name), { recursive: true });
-            subProc = spawn(yarnCommand, ["create", "solid"], {
-                stdio: "inherit",
-                cwd: path.join(cwd(), answers.name),
-            });
-            break;
-        case "T3":
-            subProc = spawn(yarnCommand, ["create", "t3-app", answers.name], { stdio: "inherit" });
-            askForInstall = false; // T3 already asks about installing dependencies
-            break;
-        case "Astro":
-            subProc = spawn(yarnCommand, ["create", "astro", answers.name], { stdio: "inherit" });
-            askForInstall = false; // astro cli already asks about installing dependencies
-            break;
-        case "Tauri":
-            subProc = spawn(yarnCommand, ["create", "tauri-app", answers.name], {
-                stdio: "inherit",
-            });
-            break;
-        default:
-            console.log(chalk.red("Unknown CLI"));
-            process.exit(1);
+    let subProc: ChildProcess;
+    if (selectedCli.createProjectFolder) {
+        if (!fs.existsSync(path.join(cwd(), answers.name)))
+            fs.mkdirSync(path.join(cwd(), answers.name), { recursive: true });
+        subProc = spawn(yarnCommand, ["create", selectedCli.command], {
+            stdio: "inherit",
+            cwd: path.join(cwd(), answers.name),
+        });
+    } else {
+        subProc = spawn(yarnCommand, ["create", selectedCli.command], {
+            stdio: "inherit",
+        });
     }
     subProc.on("error", (err) => console.error(err));
     await new Promise<void>((res) => {
@@ -64,7 +53,7 @@ export async function handleCLI(_answers: { name: string }) {
             res();
         });
     });
-    if (askForInstall) {
+    if (selectedCli.askForInstall) {
         const { shouldInstall } = await inquirer.prompt<{ shouldInstall: boolean }>([
             {
                 type: "confirm",
