@@ -1,6 +1,6 @@
 {
     "name": "create-blech",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "bin": "index.js",
     "license": "MIT",
     "scripts": {
@@ -37,6 +37,7 @@
     "files": [
         "dist",
         "templates",
-        "templates.yml"
+        "templates.yml",
+        "clis.yml"
     ]
 }
