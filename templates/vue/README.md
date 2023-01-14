@@ -8,7 +8,7 @@ Features:
 -   Reactivity Transform enabled
 -   File-based routing
 -   State-management with Pinia
--   Tailwindcss
+-   Unocss with preset-wind, preset-typography, preset-icons and preset-attributify
 -   VueUse (fully treeshakeable)
 -   Typescript
 -   PWA-ready
