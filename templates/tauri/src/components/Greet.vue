@@ -11,13 +11,17 @@ async function greet() {
 </script>
 
 <template>
-    <div class="bg-red-500 p-2 text-red-900 flex gap-2">
+    <div uno:bg="red-500" uno:p="2" uno:text="red-900" class="flex gap-2">
         <input
-            class="px-2 rounded-lg border-2 border-red-700 bg-transparent outline-none focus:border-red-900"
+            uno:bg="transparent"
+            uno:border="solid 2 red-700 focus:red-900 rounded-lg"
+            class="px-2 outline-none"
             v-model="name"
             placeholder="Enter a name..."
         />
-        <button class="p-2 px-3 bg-red-300 rounded-lg" type="button" @click="greet()">Greet</button>
+        <button uno:p="2 x-3" uno:bg="red-300 active:red-400" uno:border="none rounded-lg" type="button" @click="greet()">
+            Greet
+        </button>
     </div>
 
     <p>{{ greetMsg }}</p>
