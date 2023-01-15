@@ -42,7 +42,7 @@ export async function handleCLI(_answers: { name: string }) {
             cwd: path.join(cwd(), answers.name),
         });
     } else {
-        subProc = spawn(yarnCommand, ["create", selectedCli.command], {
+        subProc = spawn(yarnCommand, ["create", selectedCli.command, answers.name], {
             stdio: "inherit",
         });
     }
