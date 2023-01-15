@@ -18,6 +18,9 @@ templates:
   - name: nitropack
     display: Nitropack
     type: bundled
+  - name: nuxt
+    display: Nuxt
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
