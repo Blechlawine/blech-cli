@@ -1,6 +1,6 @@
 {
     "name": "create-blech",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "bin": "index.js",
     "license": "MIT",
     "scripts": {
