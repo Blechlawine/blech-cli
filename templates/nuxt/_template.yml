@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../schema/_template.json
+commands:
+  - yarn set version stable
+  - yarn config set nodeLinker node-modules
+  - 'echo {"i18n-ally.localesPaths": ["locales"],"i18n-ally.keystyle": "nested","i18n-ally.extract.ignored": []} > .vscode/settings.json'
+
+ignore:
+  - node_modules
+  - "*.lock"
+  - "*.log"
+  - "dist"
