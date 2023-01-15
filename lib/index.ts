@@ -11,6 +11,7 @@ import { copyTemplateFiles, readTemplateConfig, runTemplateSetup } from "./templ
 import { execSync } from "child_process";
 import minimatch from "minimatch";
 
+console.log(""); // in macos and linux the ascii art needs an empty line before
 console.log(chalk.green(figlet.textSync("Blech-cli")));
 inquirer
     .prompt<{
