@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
+import UnoCSS from "unocss/astro";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 
@@ -8,11 +8,7 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
     site: "https://example.com",
     integrations: [
-        tailwind({
-            config: {
-                applyBaseStyles: false,
-            },
-        }),
+        UnoCSS(),
         mdx(),
         sitemap(),
         svelte(),
