@@ -21,6 +21,9 @@ templates:
   - name: nuxt
     display: Nuxt
     type: bundled
+  - name: docus
+    display: Docus
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
