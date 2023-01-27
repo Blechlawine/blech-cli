@@ -5,7 +5,11 @@ import { execSync } from "child_process";
 import inquirer from "inquirer";
 import * as yml from "yaml";
 
-export function copyTemplateFiles(templateDir: string, projectDir: string, templateConfig: TTemplateConfig) {
+export function copyTemplateFiles(
+    templateDir: string,
+    projectDir: string,
+    templateConfig: TTemplateConfig,
+) {
     // TODO: add progress bar when copying
     console.log(chalk.yellow("Copying template..."));
     fs.copySync(templateDir, projectDir, {

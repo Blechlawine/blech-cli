@@ -11,7 +11,7 @@ export async function handleCLI(_answers: { name: string }) {
     const { clis } = yml.parse(
         fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "clis.yml"), {
             encoding: "utf8",
-        })
+        }),
     ) as TClis;
     const answers = Object.assign(
         _answers,
@@ -24,7 +24,7 @@ export async function handleCLI(_answers: { name: string }) {
                 message: "Which cli do you want to run?",
                 choices: clis.map((cli) => cli.display),
             },
-        ])
+        ]),
     );
     const selectedCli = clis.find((cli) => cli.display === answers.cli);
     if (!selectedCli) {

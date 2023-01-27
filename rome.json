@@ -1,0 +1,15 @@
+{
+    "formatter": {
+        "indentSize": 4,
+        "indentStyle": "space",
+        "lineWidth": 100,
+        "formatWithErrors": true
+    },
+    "linter": {
+        "rules": {
+            "a11y": {
+                "useKeyWithClickEvents": "off"
+            }
+        }
+    }
+}

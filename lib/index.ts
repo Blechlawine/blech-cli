@@ -39,8 +39,8 @@ inquirer
                     path.join(fileURLToPath(import.meta.url), "../..", "templates.yml"),
                     {
                         encoding: "utf8",
-                    }
-                )
+                    },
+                ),
             ) as TTemplates;
             const answers = Object.assign(
                 _answers,
@@ -53,7 +53,7 @@ inquirer
                         message: "Which template do you want?",
                         choices: templates.map((t) => t.display),
                     },
-                ])
+                ]),
             );
             const selectedTemplate = templates.find((t) => t.display === answers.template);
             if (!selectedTemplate) {
@@ -65,7 +65,7 @@ inquirer
                 fileURLToPath(import.meta.url),
                 "../..",
                 "templates",
-                selectedTemplate.name
+                selectedTemplate.name,
             );
             if (!fs.existsSync(projectDir)) fs.mkdirSync(projectDir, { recursive: true });
             const filesInProjectDir = fs.readdirSync(projectDir);
