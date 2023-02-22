@@ -131,3 +131,5 @@ dist
 
 templates/**/*.lock
 templates/**/package-lock.json
+
+.vscode
