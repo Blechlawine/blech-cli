@@ -9,9 +9,7 @@ import Unocss from "unocss/vite";
 
 export default defineConfig({
     plugins: [
-        vue({
-            reactivityTransform: true, // enables $ref stuff
-        }),
+        vue(),
         Pages(), // file-based routing
         AutoImport({
             imports: ["vue", "vue-router", "vue-i18n", "@vueuse/core"],

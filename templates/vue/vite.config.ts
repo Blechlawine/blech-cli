@@ -16,9 +16,7 @@ export default defineConfig({
         port: 3000,
     },
     plugins: [
-        vue({
-            reactivityTransform: true, // enables $ref stuff
-        }),
+        vue(),
         Pages(), // file-based routing
         AutoImport({
             imports: ["vue", "vue-router", "vue-i18n", "@vueuse/core"],
