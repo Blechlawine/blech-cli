@@ -16,6 +16,5 @@
         "@trpc/server": "^10.16.0",
         "dayjs": "^1.11.7",
         "zod": "^3.21.4"
-    },
-    "packageManager": "yarn@3.4.1"
+    }
 }
