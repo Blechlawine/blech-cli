@@ -2,6 +2,7 @@
 commands:
   - yarn set version stable
   - yarn config set nodeLinker node-modules
+  - git init
 
 ignore:
   - node_modules
