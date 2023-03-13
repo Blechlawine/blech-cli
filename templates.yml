@@ -24,6 +24,9 @@ templates:
   - name: docus
     display: Docus
     type: bundled
+  - name: trpc-server
+    display: tRPC-nitropack
+    type: bundled
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
