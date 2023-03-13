@@ -26,20 +26,16 @@ export function copyTemplateFiles(
 export async function runTemplateSetup(projectDir: string, templateConfig: TTemplateConfig) {
     if (templateConfig.commands) {
         console.log("Running template setup...");
-        console.log(chalk.redBright("Going to run these commands in your project directory:"));
-        for (const command of templateConfig.commands) {
-            console.log(` | ${command}`);
-        }
-        const { confirmed } = await inquirer.prompt([
+        const answers = await inquirer.prompt<{ commands: string[] }>([
             {
-                type: "confirm",
-                name: "confirmed",
-                default: true,
-                message: "Do you want to continue?",
+                type: "checkbox",
+                name: "commands",
+                message: "Which command would you like to run in your project directory?",
+                choices: templateConfig.commands,
             },
         ]);
-        if (confirmed) {
-            for (const command of templateConfig.commands) {
+        if (answers.commands) {
+            for (const command of answers.commands) {
                 console.log(chalk.greenBright(`Running command: ${command}`));
                 execSync(command, { cwd: projectDir });
             }
