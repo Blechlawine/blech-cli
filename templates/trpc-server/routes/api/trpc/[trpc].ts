@@ -1,12 +1,9 @@
 import { createNitroAdapter } from "../../../lib/nitro-adapter";
+import { createContext } from "../../../lib/trpc";
 import { AppRouter } from "../../../server";
 
 export const trpc = createNitroAdapter({
     router: AppRouter,
-    async createContext(event) {
-        return {
-            event,
-        };
-    },
+    createContext,
     endpoint: "/api/trpc",
 });

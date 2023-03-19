@@ -9,12 +9,15 @@
         "preview": "node ./.output/server/index.mjs"
     },
     "devDependencies": {
+        "@types/node": "^18.15.3",
+        "@types/ws": "^8.5.4",
         "nitropack": "^2.3.0"
     },
     "types": "index.d.ts",
     "dependencies": {
         "@trpc/server": "^10.16.0",
         "dayjs": "^1.11.7",
+        "ws": "^8.13.0",
         "zod": "^3.21.4"
     }
 }

@@ -1,8 +1,11 @@
 import { AnyRouter, inferRouterContext } from "@trpc/server";
+import { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
+import { CreateWSSContextFnOptions, applyWSSHandler } from "@trpc/server/adapters/ws";
+import { WebSocketServer } from "ws";
 import { resolveHTTPResponse } from "@trpc/server/http";
 import type { HTTPBaseHandlerOptions } from "@trpc/server/dist/http/internals/types";
 import dayjs from "dayjs";
-import { eventHandler, H3Event, isMethod, readBody, setResponseHeaders } from "h3";
+import { eventHandler, isMethod, readBody, setResponseHeaders } from "h3";
 import Redis from "ioredis";
 import { createURL } from "ufo";
 
@@ -10,10 +13,16 @@ const cacheKey = (...args: string[]): string => {
     return args.join("-");
 };
 
-export function createNitroAdapter<TRouter extends AnyRouter, TRequest>(
+export function createNitroAdapter<
+    TRouter extends AnyRouter,
+    TRequest,
+    TContext extends inferRouterContext<TRouter>,
+>(
     opts: {
         router: TRouter;
-        createContext: (event: H3Event) => Promise<inferRouterContext<TRouter>>;
+        createContext: (
+            opts: CreateHTTPContextOptions | CreateWSSContextFnOptions,
+        ) => Promise<TContext>;
         endpoint: string;
         cache?: {
             url: string;
@@ -29,6 +38,13 @@ export function createNitroAdapter<TRouter extends AnyRouter, TRequest>(
         redis = new Redis(opts.cache.url);
     }
 
+    const wss = new WebSocketServer({ noServer: true });
+    applyWSSHandler<TRouter>({
+        wss,
+        router,
+        createContext,
+    });
+
     return eventHandler(async (event) => {
         const { req } = event.node;
         const url = createURL(req.url!);
@@ -39,7 +55,7 @@ export function createNitroAdapter<TRouter extends AnyRouter, TRequest>(
                 return cached;
             }
         }
-        const context = await createContext(event);
+        const context = await createContext(event.node);
         const result = await resolveHTTPResponse({
             batching: opts.batching,
             responseMeta: opts.responseMeta,
