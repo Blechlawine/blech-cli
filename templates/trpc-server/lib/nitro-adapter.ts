@@ -30,15 +30,18 @@ export function createNitroAdapter<
             expire?: number;
             // TODO: specify include option, to only include certain paths
         };
+		ws?: {
+			port?: number; // default 3001
+		}
     } & HTTPBaseHandlerOptions<TRouter, TRequest>,
 ) {
-    const { createContext, router, endpoint } = opts;
+    const { createContext, router, endpoint, ws: websocketOptions } = opts;
     let redis: Redis | undefined = undefined;
     if (opts.cache) {
         redis = new Redis(opts.cache.url);
     }
 
-    const wss = new WebSocketServer({ noServer: true });
+    const wss = new WebSocketServer({ port: websocketOptions?.port ?? 3001 });
     applyWSSHandler<TRouter>({
         wss,
         router,
