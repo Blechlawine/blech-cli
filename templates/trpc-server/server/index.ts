@@ -7,7 +7,7 @@ export const AppRouter = router({
     }),
     test: procedure.subscription(({ ctx }) => {
         return observable<{ randomNumber: number }>((emit) => {
-            const timer = setTimeout(() => {
+            const timer = setInterval(() => {
                 emit.next({ randomNumber: Math.random() });
             }, 1000);
             
