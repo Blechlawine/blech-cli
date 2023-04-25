@@ -1,6 +1,6 @@
 {
     "name": "create-blech",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "bin": "index.js",
     "license": "MIT",
     "scripts": {
@@ -10,20 +10,20 @@
     },
     "dependencies": {
         "chalk": "^5.2.0",
-        "figlet": "^1.5.2",
-        "fs-extra": "^11.1.0",
-        "inquirer": "^9.1.4",
-        "minimatch": "^5.1.2",
-        "yaml": "^2.2.0"
+        "figlet": "^1.6.0",
+        "fs-extra": "^11.0.1",
+        "inquirer": "^9.2.0",
+        "minimatch": "^9.0.0",
+        "yaml": "^2.2.2"
     },
     "devDependencies": {
         "@types/figlet": "^1.5.5",
-        "@types/fs-extra": "^9.0.13",
+        "@types/fs-extra": "^11.0.1",
         "@types/inquirer": "^9.0.3",
         "@types/minimatch": "^5.1.2",
-        "@types/node": "^18.11.17",
-        "typescript": "^4.9.4",
-        "unbuild": "^1.0.2"
+        "@types/node": "^18.16.0",
+        "typescript": "^5.0.4",
+        "unbuild": "^1.2.1"
     },
     "type": "module",
     "main": "index.js",
