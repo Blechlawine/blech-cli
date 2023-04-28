@@ -3,15 +3,18 @@
     windows_subsystem = "windows"
 )]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+use rspc::{Config, Router};
 
-fn main() {
+#[tokio::main]
+async fn main() {
+    let router = <Router>::new()
+        .config(Config::new().export_ts_bindings("../src/generated/bindings.ts"))
+        .query("version", |t| t(|_ctx, _input: ()| "Hello from rspc Rust"))
+        .build()
+        .arced();
+
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .plugin(rspc::integrations::tauri::plugin(router, || ()))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

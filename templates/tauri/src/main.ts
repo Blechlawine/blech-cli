@@ -6,6 +6,8 @@ import routes from "~pages";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 import en from "../locales/en.json";
+import { Procedures } from "./generated/bindings";
+import createRspc from "./plugins/rspc";
 
 const pinia = createPinia();
 
@@ -23,4 +25,6 @@ const i18n = createI18n({
     },
 });
 
-createApp(App).use(router).use(pinia).use(i18n).mount("#app");
+const rspcPlugin = createRspc<Procedures>();
+
+createApp(App).use(rspcPlugin).use(router).use(pinia).use(i18n).mount("#app");
