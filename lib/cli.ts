@@ -6,6 +6,7 @@ import fs from "fs-extra";
 import { cwd } from "process";
 import * as yml from "yaml";
 import { fileURLToPath } from "url";
+import consola from "consola";
 
 export async function handleCLI(_answers: { name: string }) {
     const { clis } = yml.parse(
@@ -49,7 +50,7 @@ export async function handleCLI(_answers: { name: string }) {
     subProc.on("error", (err) => console.error(err));
     await new Promise<void>((res) => {
         subProc.on("close", (code) => {
-            console.log(`${answers.cli} CLI terminated:`, code);
+            consola.info(`${answers.cli} CLI terminated:`, code);
             res();
         });
     });
@@ -63,7 +64,7 @@ export async function handleCLI(_answers: { name: string }) {
             },
         ]);
         if (shouldInstall) {
-            console.log(chalk.greenBright("Installing dependencies"));
+            consola.start(chalk.greenBright("Installing dependencies"));
             execSync(`${yarnCommand} install`, {
                 cwd: path.join(cwd(), answers.name),
                 stdio: "inherit",

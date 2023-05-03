@@ -1,9 +1,10 @@
 import chalk from "chalk";
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
 import fs from "fs-extra";
 import { execSync } from "child_process";
 import inquirer from "inquirer";
 import * as yml from "yaml";
+import consola from "consola";
 
 export function copyTemplateFiles(
     templateDir: string,
@@ -11,7 +12,7 @@ export function copyTemplateFiles(
     templateConfig: TTemplateConfig,
 ) {
     // TODO: add progress bar when copying
-    console.log(chalk.yellow("Copying template..."));
+    consola.start(chalk.yellow("Copying template..."));
     fs.copySync(templateDir, projectDir, {
         overwrite: true,
         filter: (src, dest) => {
@@ -20,12 +21,12 @@ export function copyTemplateFiles(
             });
         },
     });
-    console.log(chalk.greenBright("Template copied successfully"));
+    consola.success(chalk.greenBright("Template copied successfully"));
 }
 
 export async function runTemplateSetup(projectDir: string, templateConfig: TTemplateConfig) {
     if (templateConfig.commands) {
-        console.log("Running template setup...");
+        consola.start("Running template setup...");
         const answers = await inquirer.prompt<{ commands: string[] }>([
             {
                 type: "checkbox",
@@ -36,7 +37,7 @@ export async function runTemplateSetup(projectDir: string, templateConfig: TTemp
         ]);
         if (answers.commands) {
             for (const command of answers.commands) {
-                console.log(chalk.greenBright(`Running command: ${command}`));
+                consola.start(chalk.greenBright(`Running command: ${command}`));
                 execSync(command, { cwd: projectDir });
             }
         }

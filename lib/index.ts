@@ -9,10 +9,21 @@ import path from "path";
 import { handleCLI } from "./cli";
 import { copyTemplateFiles, readTemplateConfig, runTemplateSetup } from "./template";
 import { execSync } from "child_process";
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
+import consola from "consola";
+import fonts from "./fonts";
 
 console.log(""); // in macos and linux the ascii art needs an empty line before
-console.log(chalk.green(figlet.textSync("Blech-cli")));
+const font = fonts[(Math.random() * fonts.length) | 0];
+console.log("Font:", font);
+console.log(
+    chalk.green(
+        figlet.textSync("Blech-cli", {
+            font,
+            horizontalLayout: "full",
+        }),
+    ),
+);
 inquirer
     .prompt<{
         name: string;
@@ -57,7 +68,7 @@ inquirer
             );
             const selectedTemplate = templates.find((t) => t.display === answers.template);
             if (!selectedTemplate) {
-                console.log(chalk.redBright("Error selecting template"));
+                consola.error(chalk.redBright("Error selecting template"));
                 process.exit(1);
             }
             const projectDir = path.join(cwd(), answers.name);
@@ -78,7 +89,7 @@ inquirer
                     },
                 ]);
                 if (!continueAnyways) {
-                    console.log(chalk.redBright("Cancelling..."));
+                    consola.info(chalk.redBright("Cancelling..."));
                     process.exit(1);
                 }
             }
