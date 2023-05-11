@@ -28,7 +28,8 @@ templates:
     type: bundled
   - name: trpc-server
     display: tRPC-nitropack
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-trpc-server-template
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
