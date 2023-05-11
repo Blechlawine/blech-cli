@@ -26,7 +26,8 @@ templates:
     url: https://github.com/Blechlawine/blech-cli-nitropack-template
   - name: nuxt
     display: Nuxt
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-nuxt-template
   - name: docus
     display: Docus
     type: bundled

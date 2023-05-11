@@ -1,9 +1,0 @@
-{
-    // https://nuxt.com/docs/guide/concepts/typescript
-    "extends": "./.nuxt/tsconfig.json",
-    "compilerOptions": {
-        "types": ["./.nuxt/nuxt.d.ts", "@nuxtjs/i18n"],
-        "strict": true,
-        "strictNullChecks": true
-    }
-}
