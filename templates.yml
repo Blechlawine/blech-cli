@@ -14,7 +14,8 @@ templates:
     url: https://github.com/Blechlawine/blech-cli-vue-template
   - name: astro
     display: Astro
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-astro-template
   - name: tauri
     display: Tauri + Vue
     type: bundled
