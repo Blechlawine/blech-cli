@@ -22,7 +22,8 @@ templates:
     url: https://github.com/Blechlawine/blech-cli-tauri-template
   - name: nitropack
     display: Nitropack
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-nitropack-template
   - name: nuxt
     display: Nuxt
     type: bundled
