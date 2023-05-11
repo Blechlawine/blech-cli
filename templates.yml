@@ -18,7 +18,8 @@ templates:
     url: https://github.com/Blechlawine/blech-cli-astro-template
   - name: tauri
     display: Tauri + Vue
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-tauri-template
   - name: nitropack
     display: Nitropack
     type: bundled
