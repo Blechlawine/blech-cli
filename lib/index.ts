@@ -98,6 +98,7 @@ inquirer
                 templateConfig = readTemplateConfig(path.join(templateDir, "_template.yml"));
                 copyTemplateFiles(templateDir, projectDir, templateConfig);
             } else if (selectedTemplate.type === "git") {
+                consola.start(`Cloning ${selectedTemplate.url} into ${projectDir}`);
                 execSync(`npx degit ${selectedTemplate.url} ${projectDir}`);
                 templateConfig = readTemplateConfig(path.join(projectDir, "_template.yml"));
                 for (const file of fs.readdirSync(projectDir)) {
@@ -107,7 +108,7 @@ inquirer
                         })
                     ) {
                         // Remove every file that matches a glob pattern in ignore
-                        fs.removeSync(file);
+                        fs.removeSync(path.join(projectDir, file));
                     }
                 }
             }
