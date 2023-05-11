@@ -2,7 +2,8 @@
 templates:
   - name: turbo
     display: Turborepo
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-turbo-template
   - name: typescript
     display: Typescript
     type: git
