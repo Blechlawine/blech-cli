@@ -30,7 +30,8 @@ templates:
     url: https://github.com/Blechlawine/blech-cli-nuxt-template
   - name: docus
     display: Docus
-    type: bundled
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-docus-template
   - name: trpc-server
     display: tRPC-nitropack
     type: git
