@@ -11,15 +11,15 @@
     },
     "devDependencies": {
         "@nuxtjs/i18n": "^8.0.0-beta.7",
-        "@unocss/preset-attributify": "^0.51.8",
-        "@unocss/preset-icons": "^0.51.8",
-        "@unocss/preset-typography": "^0.51.8",
-        "@unocss/preset-wind": "^0.51.8",
-        "nuxt": "^3.4.2"
+        "@unocss/preset-attributify": "^0.51.12",
+        "@unocss/preset-icons": "^0.51.12",
+        "@unocss/preset-typography": "^0.51.12",
+        "@unocss/preset-wind": "^0.51.12",
+        "nuxt": "^3.4.3"
     },
     "dependencies": {
-        "@pinia/nuxt": "^0.4.9",
-        "@unocss/nuxt": "^0.51.8",
-        "@vueuse/nuxt": "^10.1.0"
+        "@pinia/nuxt": "^0.4.10",
+        "@unocss/nuxt": "^0.51.12",
+        "@vueuse/nuxt": "^10.1.2"
     }
 }
