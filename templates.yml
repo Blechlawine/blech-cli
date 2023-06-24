@@ -36,6 +36,10 @@ templates:
     display: tRPC-nitropack
     type: git
     url: https://github.com/Blechlawine/blech-cli-trpc-server-template
+  - name: tauri-nuxt
+    display: Tauri + Nuxt
+    type: git
+    url: https://github.com/Blechlawine/blech-cli-tauri-nuxt-template
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options
