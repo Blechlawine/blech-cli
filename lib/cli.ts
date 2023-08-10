@@ -1,13 +1,13 @@
-import { ChildProcess, execSync, spawn } from "child_process";
-import path from "path";
-import { fileURLToPath } from "url";
+import { Clis, ValidClis } from "./types";
 import chalk from "chalk";
+import { ChildProcess, execSync, spawn } from "child_process";
 import consola from "consola";
 import fs from "fs-extra";
 import inquirer from "inquirer";
+import path from "path";
 import { cwd } from "process";
+import { fileURLToPath } from "url";
 import * as yml from "yaml";
-import { Clis, ValidClis } from "./types";
 
 export async function handleCLI(_answers: { name: string }) {
     const { clis } = yml.parse(

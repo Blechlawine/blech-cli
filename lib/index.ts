@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import figlet from "figlet";
-import inquirer from "inquirer";
 import { handleCLI } from "./cli";
 import fonts from "./fonts";
 import { handleTemplate } from "./template";
 import { GeneralAnswers } from "./types";
+import chalk from "chalk";
+import figlet from "figlet";
+import inquirer from "inquirer";
 
 console.log(""); // in macos and linux the ascii art needs an empty line before
 const font = fonts[(Math.random() * fonts.length) | 0];

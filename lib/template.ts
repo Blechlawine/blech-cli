@@ -1,14 +1,14 @@
-import { execSync } from "child_process";
-import path from "node:path";
-import { cwd } from "node:process";
-import { fileURLToPath } from "node:url";
+import { GeneralAnswers, TemplateConfig, Templates } from "./types";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import consola from "consola";
 import fs from "fs-extra";
 import inquirer from "inquirer";
 import { minimatch } from "minimatch";
+import path from "node:path";
+import { cwd } from "node:process";
+import { fileURLToPath } from "node:url";
 import * as yml from "yaml";
-import { GeneralAnswers, TemplateConfig, Templates } from "./types";
 
 export async function handleTemplate(previousAnswers: GeneralAnswers) {
     // fileUrlToPath(import.meta.url) is the module equivalent of __dirname
