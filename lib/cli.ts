@@ -1,23 +1,24 @@
-import chalk from "chalk";
 import { ChildProcess, execSync, spawn } from "child_process";
-import inquirer from "inquirer";
 import path from "path";
+import { fileURLToPath } from "url";
+import chalk from "chalk";
+import consola from "consola";
 import fs from "fs-extra";
+import inquirer from "inquirer";
 import { cwd } from "process";
 import * as yml from "yaml";
-import { fileURLToPath } from "url";
-import consola from "consola";
+import { Clis, ValidClis } from "./types";
 
 export async function handleCLI(_answers: { name: string }) {
     const { clis } = yml.parse(
         fs.readFileSync(path.join(fileURLToPath(import.meta.url), "../..", "clis.yml"), {
             encoding: "utf8",
         }),
-    ) as TClis;
+    ) as Clis;
     const answers = Object.assign(
         _answers,
         await inquirer.prompt<{
-            cli: TValidClis;
+            cli: ValidClis;
         }>([
             {
                 type: "list",

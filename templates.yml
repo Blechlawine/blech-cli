@@ -4,42 +4,156 @@ templates:
     display: Turborepo
     type: git
     url: https://github.com/Blechlawine/blech-cli-turbo-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+
   - name: typescript
     display: Typescript
     type: git
     url: https://github.com/Blechlawine/blech-cli-typescript-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - dist
+        - "*.log"
+
   - name: vue
     display: Vue
     type: git
     url: https://github.com/Blechlawine/blech-cli-vue-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - 'echo {"i18n-ally.localesPaths": ["locales"],"i18n-ally.keystyle": "nested","i18n-ally.extract.ignored": []} > .vscode/settings.json'
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - "dist"
+
   - name: astro
     display: Astro
     type: git
     url: https://github.com/Blechlawine/blech-cli-astro-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+
   - name: tauri
     display: Tauri + Vue
     type: git
     url: https://github.com/Blechlawine/blech-cli-tauri-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - 'echo {"i18n-ally.localesPaths": ["locales"],"i18n-ally.keystyle": "nested","i18n-ally.extract.ignored": []} > .vscode/settings.json'
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - "dist"
+        - "target"
+
   - name: nitropack
     display: Nitropack
     type: git
     url: https://github.com/Blechlawine/blech-cli-nitropack-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - .output
+        - .nitro
+
   - name: nuxt
     display: Nuxt
     type: git
     url: https://github.com/Blechlawine/blech-cli-nuxt-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - 'echo {"i18n-ally.localesPaths": ["locales"],"i18n-ally.keystyle": "nested","i18n-ally.extract.ignored": []} > .vscode/settings.json'
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - ".nuxt"
+        - "dist"
+
   - name: docus
     display: Docus
     type: git
     url: https://github.com/Blechlawine/blech-cli-docus-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - "dist"
+
   - name: trpc-server
     display: tRPC-nitropack
     type: git
     url: https://github.com/Blechlawine/blech-cli-trpc-server-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - .output
+        - .nitro
+
   - name: tauri-nuxt
     display: Tauri + Nuxt
     type: git
     url: https://github.com/Blechlawine/blech-cli-tauri-nuxt-template
+    config:
+      commands:
+        - yarn set version stable
+        - yarn config set nodeLinker node-modules
+        - 'echo {"i18n-ally.localesPaths": ["locales"],"i18n-ally.keystyle": "nested","i18n-ally.extract.ignored": []} > .vscode/settings.json'
+        - git init
+      ignore:
+        - node_modules
+        - "*.lock"
+        - "*.log"
+        - "dist"
+        - "target"
 
   # TODO: add templates for:
   # - nitro, trpc, prisma with trpc and prisma being optional options

@@ -25,6 +25,26 @@
                     "url": {
                         "type": "string",
                         "description": "In case of type: 'git': the url of the template repository"
+                    },
+                    "config": {
+                        "type": "object",
+                        "description": "The configuration of the template",
+                        "properties": {
+                            "commands": {
+                                "type": "array",
+                                "description": "A list of commands to run when the template has been copied",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "ignore": {
+                                "type": "array",
+                                "description": "A list of glob patterns for files to exclude from the final output",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             }

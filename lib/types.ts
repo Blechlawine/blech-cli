@@ -1,24 +1,30 @@
-type TTemplateConfig = {
+export type GeneralAnswers = {
+    name: string;
+    type: "CLI" | "Template";
+};
+
+export type TemplateConfig = {
     commands?: string[];
     ignore?: string[];
 };
 
-type TTemplates = {
+export type Templates = {
     templates: Array<
         {
             name: string;
             display: string;
+            config: TemplateConfig;
         } & ({ type: "bundled" } | { type: "git"; url: string })
     >;
 };
 
-type TClis = {
+export type Clis = {
     clis: Array<{
-        display: TValidClis;
+        display: ValidClis;
         command: string;
         askForInstall?: boolean;
         createProjectFolder?: boolean;
     }>;
 };
 
-type TValidClis = "Vite" | "Next.js" | "T3" | "Solid-start" | "Astro" | "Tauri";
+export type ValidClis = "Vite" | "Next.js" | "T3" | "Solid-start" | "Astro" | "Tauri";
